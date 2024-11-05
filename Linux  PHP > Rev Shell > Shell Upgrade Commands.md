@@ -29,3 +29,12 @@ python -c 'import pty; pty.spawn("/bin/bash")'
 python3 -c 'import pty; pty.spawn("/bin/bash")'
 ```
 
+## 🎃 TTY Shell Upgrade
+
+```
+script /dev/null -c bash
+export TERM=xterm
+# Control + z
+stty raw -echo && fg
+# Press Enter (Return) twice
+```
