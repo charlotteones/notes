@@ -38,3 +38,8 @@ export TERM=xterm
 stty raw -echo && fg
 # Press Enter (Return) twice
 ```
+
+## 🎃 Shell To Bash Upgrade
+```
+SHELL=/bin/bash script -q /dev/null
+```
