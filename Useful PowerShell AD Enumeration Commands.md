@@ -1,33 +1,10 @@
 # Useful PowerShell AD Enumeration Commands
 
 sometimes a man just dont wanna learn all the syntax and need those commands fireable pew pew haha
+##🌙 Check if RSAT tools are installed
 
-# 🎃Users 🎃
-
-## 🐈‍⬛.scf file🐈‍⬛
-
-Get-WindowsCapability -Name RSAT* -Online | Select-Object -Property Name, State 	Check if RSAT tools are installed
+Get-WindowsCapability -Name RSAT* -Online | Select-Object -Property Name, State 
 Get-WindowsCapability -Name RSAT* -Online | Add-WindowsCapability –Online
-
-
-## ⭐ Attacker
-
-
-##🌙 Victim
-
-
-
-```
-[Shell]
-
-```
-
-
-Here's a cheatsheet for enumerating Active Directory (AD) using the RSAT (Remote Server Administration Tools) with PowerShell. This guide includes common commands for querying AD objects like users, groups, computers, and organizational units.
-Setup Prerequisites
-
-    Install RSAT:
-
 Install-WindowsFeature -Name RSAT-AD-PowerShell
 
 ##🌙  Import the AD module:
