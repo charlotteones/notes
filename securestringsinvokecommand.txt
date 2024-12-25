@@ -1,0 +1,4 @@
+$passwd = ConvertTo-SecureString "PASS" -AsPlainText -force
+$cred = New-Object System.Management.Automation.PSCredential ("DOMAIN\user", $passwd)
+Invoke-Command -computername SERVER -ConfigurationName dc_manage -ScriptBlock
+{whoami} -credential $cred
