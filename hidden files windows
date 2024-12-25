@@ -1,0 +1,11 @@
+wow i sure do hope there are no hidden files on this windows machine!! how do i enumerate them?
+
+  Sure! Here's a concise list of commands to view hidden files in different Windows command-line shells:
+1. Command Prompt (CMD)
+
+dir /a
+    dir /a:h
+
+2. PowerShell
+Get-ChildItem -Force
+    Get-ChildItem -Force | Where-Object { $_.Attributes -match "Hidden" }
