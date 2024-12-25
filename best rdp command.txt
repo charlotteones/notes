@@ -1,0 +1,1 @@
+xfreerdp /u: /p:'' /v: /dynamic-resolution /relax-order-checks +glyph-cache /drive:/home;/home/kali
